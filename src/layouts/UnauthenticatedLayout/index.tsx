@@ -6,7 +6,6 @@ interface indexProps {}
 export default ({}) => {
   return (
     <>
-      unauth works
       <Outlet />
     </>
   );
