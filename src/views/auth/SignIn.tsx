@@ -1,18 +1,32 @@
 import React from "react";
 import { Form, Input, Button, Checkbox, Row, Col } from "antd";
-import { UserOutlined, LockOutlined, GoogleCircleFilled } from "@ant-design/icons";
-import api from '../../api';
+import {
+  UserOutlined,
+  LockOutlined,
+  GoogleCircleFilled,
+} from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import api from "../../api";
+import auth from "../../utils/auth";
+import { message } from "antd";
 
 interface SigninProps {}
 
 export default () => {
-  const onFinish = (values: any) => {
-    api.login(values);
+  const navigate = useNavigate();
+  const onFinish = async (values: any) => {
+    try {
+      const res = await api.login(values);
+      if (res)
+        auth.login(res, () => navigate("/app/dashboard", { replace: true }));
+    } catch (e) {
+      message.error("Username or password invalid !!");
+    }
   };
 
   return (
-    <Row justify="space-around" align="middle" style={{height:'100vh'}}>
-      <Col flex="300px" >
+    <Row justify="space-around" align="middle" style={{ height: "100vh" }}>
+      <Col flex="300px">
         <Form
           name="normal_login"
           className="login-form height-50"

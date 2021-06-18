@@ -12,8 +12,11 @@ instance.interceptors.request.use((config) => {
 });
 
 instance.interceptors.response.use(undefined, (error) => {
-  if(error.message === 'Network Error' &&  !error.response) 
-    message.error('Please check network connection !!');
+  if (error.message === "Network Error" && !error.response) {
+    message.error("Please check network connection !!");
+    return;
+  }
+  return Promise.reject(error);
 });
 
 export default {
