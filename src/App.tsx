@@ -4,11 +4,15 @@ import { useRoutes, BrowserRouter as Router } from "react-router-dom";
 import "antd/dist/antd.css";
 import routes from "./routes";
 import auth from "./utils/auth";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
+
 
 function App() {
   const routing = useRoutes(routes(auth.isAuthenticated()));
 
-  return <>{routing}</>;
+  return <QueryClientProvider client={queryClient}>{routing}</QueryClientProvider>;
 }
 
 export default App;

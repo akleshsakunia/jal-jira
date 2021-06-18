@@ -32,13 +32,13 @@ export default {
   //     method: 'GET',
   //     url: `/users/${userId}/`
   //   }),
-  // issues: {
-  //   getIssuesAssignedToMe: (userId) =>
-  //     instance({
-  //       method: 'GET',
-  //       url: `/assigned-issues/user/${userId}/`
-  //     })
-  // },
+  issues: {
+    getIssuesAssignedToMe: (userId:number) =>
+      instance({
+        method: 'GET',
+        url: `/assigned-issues/user/${userId}/`
+      })
+  },
   // getMyTodos: (issueId) =>
   //   instance({
   //     method: 'GET',
