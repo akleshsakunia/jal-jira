@@ -6,6 +6,7 @@ import SignIn from "./views/auth/SignIn";
 import SignUp from "./views/auth/SignUp";
 import LandingPage from "./views/LandingPage";
 import NotFoundView from "./views/NotFoundView";
+import Analytics from './views/Analytics';
 
 const routes = (isLoggedIn: boolean) => [
   {
@@ -13,6 +14,7 @@ const routes = (isLoggedIn: boolean) => [
     element: isLoggedIn ? <AuthenticatedLayout /> : <Navigate to="/signin" />,
     children: [
       { path: "dashboard", element: <LandingPage /> },
+      { path: "analytics", element: <Analytics/>},
       { path: "404", element: <NotFoundView /> },
       { path: "*", element: <Navigate to="/404" /> },
     ],

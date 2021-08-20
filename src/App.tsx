@@ -6,8 +6,13 @@ import routes from "./routes";
 import auth from "./utils/auth";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
-
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 function App() {
   const routing = useRoutes(routes(auth.isAuthenticated()));

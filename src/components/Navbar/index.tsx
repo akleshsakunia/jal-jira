@@ -26,6 +26,8 @@ export default () => {
         theme="light"
         mode="horizontal"
         style={{ backgroundColor: "#FFE400" }}
+        defaultSelectedKeys={["1"]}
+
       >
         <Menu.Item key="1">
           <Dropdown overlay={YourWorkMenuItems} placement="bottomCenter" arrow>

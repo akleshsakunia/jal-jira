@@ -1,4 +1,4 @@
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu, Row, Col, Skeleton, Switch, Card, Avatar } from "antd";
 import {
   UserOutlined,
   LaptopOutlined,
@@ -6,35 +6,51 @@ import {
 } from "@ant-design/icons";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
+import { useNavigate } from "react-router-dom";
+import api from "../../api";
+import { useQuery } from "react-query";
+import { UserInfo } from "../../layouts/AuthenticatedLayout";
+import { useState, useEffect } from "react";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
+const { Meta } = Card;
 
 export default () => {
+  const userDetails: UserInfo = JSON.parse(localStorage.getItem("user_details")!);
+  const [projectCount, setProjectCount] = useState([0]);
+  const fetchProjects = async () => {
+    const { data } = await api.projects.getMyProjects();
+    return data;
+  };
+  const { isLoading, isSuccess, isError, data: userData } = useQuery(
+    "project",
+    fetchProjects,
+    {refetchInterval: false}
+  );
+  useEffect(() => {
+    async function fetchMyAPI() {
+      const count = await userDetails.profile.tagged_projects;
+      setProjectCount(count);
+    }
+  });
+
+  const navigate = useNavigate();
   return (
-    <Layout style={{ height: "100vh" }}>
-      <Navbar/>
-      <Layout>
-        <Sidebar/>
-        <Layout style={{ padding: "0 24px 24px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
-          <Content
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
-          >
-            Content
-          </Content>
-        </Layout>
-      </Layout>
-    </Layout>
+    <>
+      <h2>Your Work</h2>
+      <Row>
+        <h3> Recent Projects </h3>
+        {projectCount}
+        <Card style={{ width: 300, marginTop: 16 }} loading={isLoading}>
+          <Meta
+            avatar={<Avatar> al</Avatar>}
+            title="Card title"
+            description="This is the description"
+          />
+        </Card>
+      </Row>
+    </>
   );
 };
 

@@ -5,37 +5,46 @@ import {
   LaptopOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 export default () => {
+    const navigate = useNavigate();
   return (
-    <Sider width={200} className="site-layout-background" style={{overflow: "scroll"}}>
+    <Sider
+      width={200}
+      className="site-layout-background"
+      style={{ overflow: "scroll" }}
+    >
       <Menu
         mode="inline"
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
+        // defaultSelectedKeys={["3"]}
+        // defaultOpenKeys={["sub1"]}
         style={{ height: "100%", borderRight: 0 }}
       >
-        <SubMenu key="sub1" icon={<UserOutlined />} title="subnav 1">
-          <Menu.Item key="1">option1</Menu.Item>
-          <Menu.Item key="2">option2</Menu.Item>
-          <Menu.Item key="3">option3</Menu.Item>
-          <Menu.Item key="4">option4</Menu.Item>
-        </SubMenu>
-        <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
-          <Menu.Item key="5">option5</Menu.Item>
-          <Menu.Item key="6">option6</Menu.Item>
-          <Menu.Item key="7">option7</Menu.Item>
-          <Menu.Item key="8">option8</Menu.Item>
-        </SubMenu>
-        <SubMenu key="sub3" icon={<NotificationOutlined />} title="subnav 3">
-          <Menu.Item key="9">option9</Menu.Item>
-          <Menu.Item key="10">option10</Menu.Item>
-          <Menu.Item key="11">option11</Menu.Item>
-          <Menu.Item key="12">option12</Menu.Item>
-        </SubMenu>
+        <Menu.Item key="1" icon={<LaptopOutlined />}>
+          Roadmap
+        </Menu.Item>
+        <Menu.Item key="2" icon={<LaptopOutlined />}>
+          Backlog
+        </Menu.Item>
+        <Menu.Item key="3" icon={<LaptopOutlined />}>
+          Board
+        </Menu.Item>
+        <Menu.Item key="4" icon={<LaptopOutlined />}>
+          Code
+        </Menu.Item>
+        <Menu.Item key="5" icon={<LaptopOutlined />}>
+          Project Pages
+        </Menu.Item>
+        <Menu.Item key="6" icon={<LaptopOutlined />}>
+          Add Items
+        </Menu.Item>
+        <Menu.Item key="7" icon={<LaptopOutlined />}>
+          Project Settings
+        </Menu.Item>
       </Menu>
     </Sider>
   );

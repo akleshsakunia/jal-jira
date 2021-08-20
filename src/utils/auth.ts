@@ -24,7 +24,9 @@ class Auth {
   isAuthenticated() {
     const token = localStorage.getItem("token");
     const loggedInAt = localStorage.getItem("loggedInAt") || 0;
-    if (token && Math.floor(Date.now() / 1000) < 3600 + +loggedInAt)
+    const currTime = Math.floor(Date.now() / 1000);
+    const expirationTime = 3600 + Number(loggedInAt)
+    if (token &&  currTime < expirationTime )
       this.authenticated = true;
     else this.authenticated = false;
     return this.authenticated;
