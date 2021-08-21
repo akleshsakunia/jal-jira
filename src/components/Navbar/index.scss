@@ -1,0 +1,12 @@
+$top-nav-bgcolor: #ffe400;
+
+.menu-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  //   background-color: $top-nav-bgcolor;
+}
+
+.nav {
+  background: $top-nav-bgcolor !important;
+}
