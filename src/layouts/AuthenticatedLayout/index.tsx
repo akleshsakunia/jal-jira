@@ -16,35 +16,35 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 export interface UserInfo {
-  user_id:number,
-  email:string,
+  user_id: number;
+  email: string;
   user_details: {
     profile: {
-      tagged_projects:Array<number>
-    }
-  },
+      tagged_projects: Array<number>;
+    };
+  };
   [key: string]: any;
 }
 
 export default ({}) => {
-  const userInfo:UserInfo = JSON.parse(localStorage.getItem("userInfo")!);
+  const userInfo: UserInfo = JSON.parse(localStorage.getItem("userInfo")!);
 
   const fetchUserDetails = async () => {
     const { data } = await api.getProfileData(userInfo.user_id);
-    localStorage.setItem('user_details', JSON.stringify(data))
+    localStorage.setItem("user_details", JSON.stringify(data));
     return data;
   };
-  const { isLoading, isSuccess, isError, data: userData } = useQuery(
-    "userdetails",
-    fetchUserDetails,
-    {refetchInterval: false}
-  );
+  const {
+    isLoading,
+    isSuccess,
+    isError,
+    data: userData,
+  } = useQuery("userdetails", fetchUserDetails, { refetchInterval: false });
 
   return (
     <Layout style={{ height: "100vh" }}>
       <Navbar />
       <Layout>
-        <Sidebar />
         <Layout style={{ padding: "0 24px 24px" }}>
           {/* <Breadcrumb style={{ margin: "16px 0" }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -63,6 +63,7 @@ export default ({}) => {
           </Content>
         </Layout>
       </Layout>
+      <Sidebar />
     </Layout>
   );
 };
