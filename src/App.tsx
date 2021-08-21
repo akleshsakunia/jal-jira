@@ -5,6 +5,7 @@ import "antd/dist/antd.css";
 import routes from "./routes";
 import auth from "./utils/auth";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { UserInfo } from "./layouts/AuthenticatedLayout";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,7 +14,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
 function App() {
   const routing = useRoutes(routes(auth.isAuthenticated()));
 

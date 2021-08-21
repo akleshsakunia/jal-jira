@@ -26,6 +26,8 @@ export interface UserInfo {
   [key: string]: any;
 }
 
+export const userContext = React.createContext({});
+
 export default ({}) => {
   const userInfo: UserInfo = JSON.parse(localStorage.getItem("userInfo")!);
 
@@ -43,27 +45,31 @@ export default ({}) => {
 
   return (
     <Layout style={{ height: "100vh" }}>
-      <Navbar />
-      <Layout>
-        <Layout style={{ padding: "0 24px 24px" }}>
-          {/* <Breadcrumb style={{ margin: "16px 0" }}>
+      {isSuccess && (
+        <userContext.Provider value={userData}>
+          <Navbar />
+          <Layout>
+            <Layout style={{ padding: "0 24px 24px" }}>
+              {/* <Breadcrumb style={{ margin: "16px 0" }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
           </Breadcrumb> */}
-          <Content
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
-          >
-            <Outlet />
-          </Content>
-        </Layout>
-      </Layout>
-      <Sidebar />
+              <Content
+                className="site-layout-background"
+                style={{
+                  padding: 24,
+                  margin: 0,
+                  minHeight: 280,
+                }}
+              >
+                <Outlet />
+              </Content>
+            </Layout>
+          </Layout>
+          <Sidebar />
+        </userContext.Provider>
+      )}
     </Layout>
   );
 };

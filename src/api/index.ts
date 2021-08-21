@@ -1,7 +1,6 @@
 import axios from "axios";
 import { message } from "antd";
 
-
 // Create instance called instance
 const instance = axios.create({
   baseURL: `http://localhost:8000/api/v1`,
@@ -18,8 +17,10 @@ instance.interceptors.response.use(undefined, (error) => {
     return;
   }
   if (error.response.status === 401) {
-    message.error({content:`<>Your session is expired. Please <Link href='/signin'>sign in</Link> again to continue.</>`})
-   }
+    message.error({
+      content: `<>Your session is expired. Please <Link href='/signin'>sign in</Link> again to continue.</>`,
+    });
+  }
   return Promise.reject(error);
 });
 
@@ -31,24 +32,29 @@ export default {
       data: userData,
       headers: {},
     }),
-  getProfileData: (userId:number) =>
+  getProfileData: (userId: number) =>
     instance({
-      method: 'GET',
-      url: `/users/${userId}/`
+      method: "GET",
+      url: `/users/${userId}/`,
     }),
   issues: {
-    getIssuesAssignedToMe: (userId:number) =>
+    getIssuesAssignedToMe: (userId: number) =>
       instance({
-        method: 'GET',
-        url: `/assigned-issues/user/${userId}/`
-      })
+        method: "GET",
+        url: `/assigned-issues/user/${userId}/`,
+      }),
+    getAllMyIssues: (userId: number) =>
+      instance({
+        method: "GET",
+        url: `/all-my-issues/user/${userId}/`,
+      }),
   },
   projects: {
     getMyProjects: () =>
       instance({
-        method: 'GET',
-        url: `get-my-projects/` //todo
-      })
+        method: "GET",
+        url: `get-my-projects/`, //todo
+      }),
   },
   // getMyTodos: (issueId) =>
   //   instance({
