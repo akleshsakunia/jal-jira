@@ -33,10 +33,10 @@ const colorCodes: any = {
 };
 
 const issueType: any = {
-  TASK: <FiList />,
-  STORY: <FiBookmark />,
-  BUG: <FiXOctagon />,
-  EPIC: <FiZap />,
+  TASK: <img src="/icons/Task.svg" alt="task" />,
+  STORY: <img src="/icons/Story.svg" alt="story" />,
+  BUG: <img src="/icons/Bug.svg" alt="bug" />,
+  EPIC: <img src="/icons/Epic.svg" alt="epic" />,
 };
 
 export default () => {
