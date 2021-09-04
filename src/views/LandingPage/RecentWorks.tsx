@@ -22,6 +22,7 @@ import { useQuery } from "react-query";
 import api from "../../api";
 import { userContext, UserInfo } from "../../layouts/AuthenticatedLayout";
 import list from "antd/lib/transfer/list";
+import "./index.scss";
 
 const colorCodes: any = {
   IN_PROG: "cyan",
@@ -32,6 +33,12 @@ const colorCodes: any = {
   TODO: "purple",
 };
 
+const LandingPageTabs = {
+  workedOn: "workedOn",
+  viewed: "viewed",
+  assigned: "assigned",
+  starred: "starred",
+};
 const issueType: any = {
   TASK: <img src="/icons/Task.svg" alt="task" />,
   STORY: <img src="/icons/Story.svg" alt="story" />,
@@ -40,16 +47,23 @@ const issueType: any = {
 };
 
 export default () => {
-  const [current, setCurrent] = useState("workedOn");
+  const [currentTab, setCurrentTab] = useState(LandingPageTabs.workedOn);
   const userDetails: any = useContext(userContext);
 
   const handleClick = (e: any) => {
-    setCurrent(e.key);
+    setCurrentTab(e.key);
+    // refreshContentOnTabs();
+    console.log(e.key);
   };
 
-  const fetchAllMyIssues = async () => {
+  const fetchData = async () => {
     const user_id = userDetails.id;
-    const { data } = await api.issues.getAllMyIssues(user_id);
+    let data = [];
+    if (currentTab == LandingPageTabs.workedOn) {
+      ({ data } = await api.issues.getAllMyIssues(user_id));
+    } else if (currentTab == LandingPageTabs.assigned) {
+      ({ data } = await api.issues.getIssuesAssignedToMe(user_id));
+    }
     return data;
   };
   const {
@@ -57,33 +71,42 @@ export default () => {
     isSuccess,
     isError,
     data: allMyIssues,
-  } = useQuery("getAllMyIssues", fetchAllMyIssues, { refetchInterval: false });
+    refetch: refreshContentOnTabs,
+  } = useQuery(["landingPagetabs", currentTab], fetchData, {
+    refetchInterval: false,
+  });
 
   return (
     <>
-      <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-        <Menu.Item key="workedOn" icon={<MailOutlined />}>
+      <Menu
+        onClick={(e) => handleClick(e)}
+        selectedKeys={[currentTab]}
+        mode="horizontal"
+      >
+        <Menu.Item key={LandingPageTabs.workedOn} icon={<MailOutlined />}>
           Worked On
         </Menu.Item>
-        <Menu.Item key="viewed" icon={<MailOutlined />}>
+        <Menu.Item key={LandingPageTabs.viewed} icon={<MailOutlined />}>
           Viewed
         </Menu.Item>
-        <Menu.Item key="assigned" icon={<MailOutlined />}>
+        <Menu.Item key={LandingPageTabs.assigned} icon={<MailOutlined />}>
           Assigned to me
         </Menu.Item>
-        <Menu.Item key="starred" icon={<MailOutlined />}>
+        <Menu.Item key={LandingPageTabs.starred} icon={<MailOutlined />}>
           Starred
         </Menu.Item>
       </Menu>
       <List
+        className="recent-list"
         loading={isLoading}
         itemLayout="horizontal"
         dataSource={allMyIssues}
         renderItem={(item: any) => (
           <List.Item
             actions={[
-              <a key="list-loadmore-edit">edit</a>,
-              <a key="list-loadmore-more">more</a>,
+              // <a key="list-loadmore-edit">edit</a>,
+              // <a key="list-loadmore-more">more</a>,
+              <span>Priority: {item.priority}</span>,
             ]}
           >
             <Skeleton avatar title={false} loading={isLoading} active>
@@ -91,18 +114,15 @@ export default () => {
                 avatar={issueType[item.issue_type]}
                 title={
                   <a href="https://ant.design">
-                    {item.issue_title}{" "}
-                    <Tag
-                      color={colorCodes[item.issue_status]}
-                      style={{ borderRadius: "2rem", marginLeft: "0.8rem" }}
-                    >
+                    {item.issue_title}
+                    <Tag color={colorCodes[item.issue_status]} className="tags">
                       {item.issue_status}
                     </Tag>
                   </a>
                 }
                 description={`Issue Id: ${item.uid}`}
               />
-              <div>content</div>
+              <div>{item.description}</div>
             </Skeleton>
           </List.Item>
         )}

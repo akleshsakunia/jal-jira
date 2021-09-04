@@ -44,3 +44,13 @@
 .ant-btn {
   border-radius: 0.5em !important;
 }
+
+::selection {
+  color: #fff;
+  background: #590b59 !important;
+}
+
+.tags {
+  border-radius: 2rem !important;
+  margin-left: 0.8rem !important;
+}

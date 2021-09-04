@@ -21,6 +21,7 @@ export default () => {
 
   return (
     <Sider
+      theme="dark"
       width={200}
       className="site-layout-background"
       style={{ overflow: "scroll" }}
