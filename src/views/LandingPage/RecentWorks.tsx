@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { ReactElement, useContext } from "react";
 import { Avatar, List, Menu, Skeleton, Tag } from "antd";
 import {
   FiBookmark,
@@ -23,6 +23,7 @@ import api from "../../api";
 import { userContext, UserInfo } from "../../layouts/AuthenticatedLayout";
 import list from "antd/lib/transfer/list";
 import "./index.scss";
+import { useMediaQuery } from "react-responsive";
 
 const colorCodes: any = {
   IN_PROG: "cyan",
@@ -49,6 +50,7 @@ const issueType: any = {
 export default () => {
   const [currentTab, setCurrentTab] = useState(LandingPageTabs.workedOn);
   const userDetails: any = useContext(userContext);
+  const mode = useMediaQuery({ maxWidth: 1224 }) ? "vertical" : "horizontal";
 
   const handleClick = (e: any) => {
     setCurrentTab(e.key);
@@ -81,7 +83,7 @@ export default () => {
       <Menu
         onClick={(e) => handleClick(e)}
         selectedKeys={[currentTab]}
-        mode="horizontal"
+        mode={mode}
       >
         <Menu.Item key={LandingPageTabs.workedOn} icon={<MailOutlined />}>
           Worked On
@@ -127,7 +129,6 @@ export default () => {
           </List.Item>
         )}
       />
-      {/* <Empty /> */}
     </>
   );
 };

@@ -21,7 +21,6 @@ export default () => {
 
   return (
     <Sider
-      theme="dark"
       width={200}
       className="site-layout-background"
       style={{ overflow: "scroll" }}
@@ -30,6 +29,7 @@ export default () => {
       onCollapse={(collapsed) => setCollapsed(collapsed)}
     >
       <Menu
+        theme="dark"
         mode="inline"
         // defaultSelectedKeys={["3"]}
         // defaultOpenKeys={["sub1"]}
