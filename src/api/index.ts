@@ -53,7 +53,14 @@ export default {
     getMyProjects: () =>
       instance({
         method: "GET",
-        url: `get-my-projects/`, //todo
+        url: `get-my-projects/`,
+      }),
+  },
+  sprint: {
+    board: () =>
+      instance({
+        method: "GET",
+        url: `board/`,
       }),
   },
   // getMyTodos: (issueId) =>

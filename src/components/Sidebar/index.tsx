@@ -41,7 +41,11 @@ export default () => {
         <Menu.Item key="2" icon={<InboxOutlined />}>
           Backlog
         </Menu.Item>
-        <Menu.Item key="3" icon={<BarcodeOutlined />}>
+        <Menu.Item
+          key="3"
+          icon={<BarcodeOutlined />}
+          onClick={() => navigate("/app/board")}
+        >
           Board
         </Menu.Item>
         <Menu.Item key="4" icon={<LaptopOutlined />}>
