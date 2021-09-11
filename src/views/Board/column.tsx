@@ -7,7 +7,7 @@ const Container = styled.div`
   margin: 8px;
   border: 1px solid lightgrey;
   border-radius: 2px;
-  width: 220px;
+  width: 16%;
 
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@ const Container = styled.div`
 const Title = styled.h3`
   padding: 8px;
 `;
-const TaskList = styled.div<{ isDraggingOver: boolean; innerRef: any }>`
+const TaskList = styled.div<{ isDraggingOver: boolean; ref: any }>`
   padding: 8px;
   transition: background-color 0.2s ease;
   background-color: ${(props: any) =>
@@ -31,7 +31,7 @@ export default (props: any) => {
       <Droppable droppableId={props.column.id}>
         {(provided, snapshot) => (
           <TaskList
-            innerRef={provided.innerRef}
+            ref={provided.innerRef}
             {...provided.droppableProps}
             isDraggingOver={snapshot.isDraggingOver}
           >

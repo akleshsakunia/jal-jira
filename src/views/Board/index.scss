@@ -1,0 +1,10 @@
+.issue-text {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.issue-icon {
+  padding: 0 0.3em 0 0.3em;
+}

@@ -40,7 +40,7 @@ const LandingPageTabs = {
   assigned: "assigned",
   starred: "starred",
 };
-const issueType: any = {
+export const issueType: any = {
   TASK: <img src="/icons/Task.svg" alt="task" />,
   STORY: <img src="/icons/Story.svg" alt="story" />,
   BUG: <img src="/icons/Bug.svg" alt="bug" />,

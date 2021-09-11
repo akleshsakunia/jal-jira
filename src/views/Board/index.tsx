@@ -30,7 +30,7 @@ export default () => {
       columns: {
         "column-1": {
           id: "column-1",
-          title: "To do",
+          title: "TODO",
           taskIds: _.map(
             data.filter((x: any) => x.issue_status === "TODO"),
             "id"
@@ -38,7 +38,7 @@ export default () => {
         },
         "column-2": {
           id: "column-2",
-          title: "In progress",
+          title: "BLOCKED",
           taskIds: _.map(
             data.filter((x: any) => x.issue_status === "BLOCKED"),
             "id"
@@ -46,15 +46,46 @@ export default () => {
         },
         "column-3": {
           id: "column-3",
-          title: "Done",
+          title: "WIP",
+          taskIds: _.map(
+            data.filter((x: any) => x.issue_status === "IN_PROG"),
+            "id"
+          ),
+        },
+        "column-4": {
+          id: "column-4",
+          title: "TESTING",
           taskIds: _.map(
             data.filter((x: any) => x.issue_status === "TESTING"),
             "id"
           ),
         },
+        "column-5": {
+          id: "column-5",
+          title: "TESTED",
+          taskIds: _.map(
+            data.filter((x: any) => x.issue_status === "TESTED"),
+            "id"
+          ),
+        },
+        "column-6": {
+          id: "column-6",
+          title: "Done",
+          taskIds: _.map(
+            data.filter((x: any) => x.issue_status === "DONE"),
+            "id"
+          ),
+        },
       },
       // Facilitate reordering of the columns
-      columnOrder: ["column-1", "column-2", "column-3"],
+      columnOrder: [
+        "column-1",
+        "column-2",
+        "column-3",
+        "column-4",
+        "column-5",
+        "column-6",
+      ],
     };
     setState(init_data);
     return data;

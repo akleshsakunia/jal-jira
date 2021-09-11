@@ -1,8 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
+import Avatar from "antd/lib/avatar/avatar";
+import { issueType } from "../LandingPage/RecentWorks";
+import "./index.scss";
 
-const Container = styled.div<{ isDragging: boolean; innerRef: any }>`
+const Container = styled.div<{ isDragging: boolean; ref: any }>`
   border: 1px solid lightgrey;
   border-radius: 2px;
   padding: 8px;
@@ -17,10 +20,17 @@ export default (props: any) => {
         <Container
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          innerRef={provided.innerRef}
+          ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          {props.task.issue_title}
+          <div>
+            <span className="issue-text">
+              <span className="issue-icon">
+                {issueType[props.task.issue_type]}
+              </span>
+              {props.task.issue_title}
+            </span>
+          </div>
         </Container>
       )}
     </Draggable>
