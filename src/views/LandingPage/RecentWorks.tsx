@@ -79,22 +79,22 @@ export default () => {
   });
 
   return (
-    <>
+    <div>
       <Menu
         onClick={(e) => handleClick(e)}
         selectedKeys={[currentTab]}
         mode={mode}
       >
-        <Menu.Item key={LandingPageTabs.workedOn} icon={<MailOutlined />}>
+        <Menu.Item key={LandingPageTabs.workedOn} icon={<FiBookmark />}>
           Worked On
         </Menu.Item>
-        <Menu.Item key={LandingPageTabs.viewed} icon={<MailOutlined />}>
+        <Menu.Item key={LandingPageTabs.viewed} icon={<FiList />}>
           Viewed
         </Menu.Item>
-        <Menu.Item key={LandingPageTabs.assigned} icon={<MailOutlined />}>
+        <Menu.Item key={LandingPageTabs.assigned} icon={<FiCheckCircle />}>
           Assigned to me
         </Menu.Item>
-        <Menu.Item key={LandingPageTabs.starred} icon={<MailOutlined />}>
+        <Menu.Item key={LandingPageTabs.starred} icon={<FiZap />}>
           Starred
         </Menu.Item>
       </Menu>
@@ -129,6 +129,6 @@ export default () => {
           </List.Item>
         )}
       />
-    </>
+    </div>
   );
 };
