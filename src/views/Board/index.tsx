@@ -6,9 +6,16 @@ import Column from "./column";
 import { useQuery } from "react-query";
 import api from "../../api";
 import * as _ from "lodash";
+import { issueStatus } from "../../utils/globalVars";
 
 const Container = styled.div`
-  display: flex;
+  flex: 1;
+`;
+
+const StackedContainer = styled.div`
+  display: inline;
+  // flex-direction: column;
+  flex: 1;
 `;
 
 export default () => {
@@ -28,49 +35,49 @@ export default () => {
         {}
       ),
       columns: {
-        "column-1": {
-          id: "column-1",
+        [issueStatus.TODO]: {
+          id: issueStatus.TODO,
           title: "TODO",
           taskIds: _.map(
             data.filter((x: any) => x.issue_status === "TODO"),
             "id"
           ),
         },
-        "column-2": {
-          id: "column-2",
+        [issueStatus.BLOCKED]: {
+          id: issueStatus.BLOCKED,
           title: "BLOCKED",
           taskIds: _.map(
             data.filter((x: any) => x.issue_status === "BLOCKED"),
             "id"
           ),
         },
-        "column-3": {
-          id: "column-3",
+        [issueStatus.IN_PROG]: {
+          id: issueStatus.IN_PROG,
           title: "WIP",
           taskIds: _.map(
             data.filter((x: any) => x.issue_status === "IN_PROG"),
             "id"
           ),
         },
-        "column-4": {
-          id: "column-4",
+        [issueStatus.TESTING]: {
+          id: issueStatus.TESTING,
           title: "TESTING",
           taskIds: _.map(
             data.filter((x: any) => x.issue_status === "TESTING"),
             "id"
           ),
         },
-        "column-5": {
-          id: "column-5",
+        [issueStatus.TESTED]: {
+          id: issueStatus.TESTED,
           title: "TESTED",
           taskIds: _.map(
             data.filter((x: any) => x.issue_status === "TESTED"),
             "id"
           ),
         },
-        "column-6": {
-          id: "column-6",
-          title: "Done",
+        [issueStatus.DONE]: {
+          id: issueStatus.DONE,
+          title: "DONE",
           taskIds: _.map(
             data.filter((x: any) => x.issue_status === "DONE"),
             "id"
@@ -79,23 +86,27 @@ export default () => {
       },
       // Facilitate reordering of the columns
       columnOrder: [
-        "column-1",
-        "column-2",
-        "column-3",
-        "column-4",
-        "column-5",
-        "column-6",
+        issueStatus.TODO,
+        [issueStatus.BLOCKED, , issueStatus.IN_PROG],
+        [issueStatus.TESTING, issueStatus.TESTED],
+        issueStatus.DONE,
       ],
     };
     setState(init_data);
     return data;
   };
+
   const { isLoading, isSuccess, isError, data: projectData } = useQuery(
     "board",
     fetchBoardItems,
     { refetchInterval: false }
   );
 
+  const updateIssue = async (issueId: any, destStatus: string) => {
+    issueId = +issueId.replace("task-", "");
+    const reqData = { issue_status: destStatus };
+    const res = await api.issues.updateIssue(issueId, reqData);
+  };
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId } = result;
 
@@ -159,21 +170,52 @@ export default () => {
       },
     };
     setState(newState);
+    updateIssue(draggableId, destination?.droppableId);
   };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       {state && (
-        <Container>
-          {state.columnOrder.map((columnId: any) => {
-            const column = state.columns[columnId];
-            const tasks = column.taskIds.map(
-              (taskId: any) => state.tasks[taskId]
-            );
+        <div style={{ display: "flex" }}>
+          <Container>
+            {[issueStatus.TODO].map((col: string) => {
+              const column = state.columns[col];
+              const tasks = column.taskIds.map(
+                (taskId: any) => state.tasks[taskId]
+              );
 
-            return <Column key={column.id} column={column} tasks={tasks} />;
-          })}
-        </Container>
+              return <Column key={column.id} column={column} tasks={tasks} />;
+            })}
+          </Container>
+          <StackedContainer>
+            {[issueStatus.IN_PROG, issueStatus.BLOCKED].map((col: string) => {
+              const column = state.columns[col];
+              const tasks = column.taskIds.map(
+                (taskId: any) => state.tasks[taskId]
+              );
+              return <Column key={column.id} column={column} tasks={tasks} />;
+            })}
+          </StackedContainer>
+          <StackedContainer>
+            {[issueStatus.TESTING, issueStatus.TESTED].map((col: string) => {
+              const column = state.columns[col];
+              const tasks = column.taskIds.map(
+                (taskId: any) => state.tasks[taskId]
+              );
+              return <Column key={column.id} column={column} tasks={tasks} />;
+            })}
+          </StackedContainer>
+          <Container>
+            {[issueStatus.DONE].map((col: string) => {
+              const column = state.columns[col];
+              const tasks = column.taskIds.map(
+                (taskId: any) => state.tasks[taskId]
+              );
+
+              return <Column key={column.id} column={column} tasks={tasks} />;
+            })}
+          </Container>
+        </div>
       )}
     </DragDropContext>
   );

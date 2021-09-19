@@ -4,30 +4,35 @@ import { Droppable } from "react-beautiful-dnd";
 import Task from "./task";
 
 const Container = styled.div`
-  margin: 8px;
+  margin: 0.5em;
   border: 1px solid lightgrey;
-  border-radius: 2px;
-  width: 16%;
-
+  border-radius: 0.5em;
+  flex:1
   display: flex;
   flex-direction: column;
 `;
 const Title = styled.h3`
-  padding: 8px;
+  padding: 0.2em;
 `;
 const TaskList = styled.div<{ isDraggingOver: boolean; ref: any }>`
-  padding: 8px;
-  transition: background-color 0.2s ease;
-  background-color: ${(props: any) =>
-    props.isDraggingOver ? "skyblue" : "white"};
+  padding: 0.5em;
+  transition: background 0.5s ease;
+  background: ${(props: any) => (props.isDraggingOver ? "#3F8D87" : "#E0F1EF")};
   flex-grow: 1;
-  min-height: 100px;
+  min-height: 30vh;
 `;
+
+// linear-gradient(
+//   130deg
+//   ,#ff7a18,#af002d 41.07%,#319197 76.05%)`
+// : `linear-gradient(
+//   45deg
+//   ,#ff7a18,#af002d 41.07%,#319197 76.05%)`};
 
 export default (props: any) => {
   return (
     <Container>
-      <Title>{props.column.title}</Title>
+      <Title style={{ textAlign: "center" }}>{props.column.title}</Title>
       <Droppable droppableId={props.column.id}>
         {(provided, snapshot) => (
           <TaskList

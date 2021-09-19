@@ -24,27 +24,13 @@ import { userContext, UserInfo } from "../../layouts/AuthenticatedLayout";
 import list from "antd/lib/transfer/list";
 import "./index.scss";
 import { useMediaQuery } from "react-responsive";
-
-const colorCodes: any = {
-  IN_PROG: "cyan",
-  DONE: "green",
-  TESTING: "magenta",
-  TESTED: "gold",
-  BLOCKED: "red",
-  TODO: "purple",
-};
+import { issueType, issueStatusColorCodes } from "../../utils/globalVars";
 
 const LandingPageTabs = {
   workedOn: "workedOn",
   viewed: "viewed",
   assigned: "assigned",
   starred: "starred",
-};
-export const issueType: any = {
-  TASK: <img src="/icons/Task.svg" alt="task" />,
-  STORY: <img src="/icons/Story.svg" alt="story" />,
-  BUG: <img src="/icons/Bug.svg" alt="bug" />,
-  EPIC: <img src="/icons/Epic.svg" alt="epic" />,
 };
 
 export default () => {
@@ -117,7 +103,10 @@ export default () => {
                 title={
                   <a href="https://ant.design">
                     {item.issue_title}
-                    <Tag color={colorCodes[item.issue_status]} className="tags">
+                    <Tag
+                      color={issueStatusColorCodes[item.issue_status]}
+                      className="tags"
+                    >
                       {item.issue_status}
                     </Tag>
                   </a>

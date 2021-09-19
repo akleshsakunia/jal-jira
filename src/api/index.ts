@@ -48,6 +48,12 @@ export default {
         method: "GET",
         url: `/all-my-issues/user/${userId}/`,
       }),
+    updateIssue: (issueId: number, data: object) =>
+      instance({
+        method: "PATCH",
+        url: `/issues/${issueId}/`,
+        data: data,
+      }),
   },
   projects: {
     getMyProjects: () =>

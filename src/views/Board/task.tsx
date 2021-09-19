@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 import Avatar from "antd/lib/avatar/avatar";
-import { issueType } from "../LandingPage/RecentWorks";
+import { issueType } from "../../utils/globalVars";
 import "./index.scss";
 
 const Container = styled.div<{ isDragging: boolean; ref: any }>`
