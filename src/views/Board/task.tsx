@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 import Avatar from "antd/lib/avatar/avatar";
 import { issueType } from "../../utils/globalVars";
-import "./index.scss";
+import style from "./index.module.scss";
 
 const Container = styled.div<{ isDragging: boolean; ref: any }>`
   border: 1px solid lightgrey;
@@ -24,8 +24,8 @@ export default (props: any) => {
           isDragging={snapshot.isDragging}
         >
           <div>
-            <span className="issue-text">
-              <span className="issue-icon">
+            <span className={style.issueText}>
+              <span className={style.issueIcon}>
                 {issueType[props.task.issue_type]}
               </span>
               {props.task.issue_title}

@@ -22,7 +22,7 @@ import { useQuery } from "react-query";
 import api from "../../api";
 import { userContext, UserInfo } from "../../layouts/AuthenticatedLayout";
 import list from "antd/lib/transfer/list";
-import "./index.scss";
+import style from "./index.module.scss";
 import { useMediaQuery } from "react-responsive";
 import { issueType, issueStatusColorCodes } from "../../utils/globalVars";
 
@@ -85,7 +85,7 @@ export default () => {
         </Menu.Item>
       </Menu>
       <List
-        className="recent-list"
+        className={style.recentList}
         loading={isLoading}
         itemLayout="horizontal"
         dataSource={allMyIssues}
