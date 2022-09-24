@@ -8,6 +8,7 @@ import LandingPage from "./views/LandingPage";
 import NotFoundView from "./views/NotFoundView";
 import Analytics from "./views/Analytics";
 import Board from "./views/Board";
+import Issue from "./views/Issue";
 
 const routes = (isLoggedIn: boolean) => [
   {
@@ -16,6 +17,7 @@ const routes = (isLoggedIn: boolean) => [
     children: [
       { path: "dashboard", element: <LandingPage /> },
       { path: "board", element: <Board /> },
+      { path: "issue/:issueId", element: <Issue /> },
       { path: "404", element: <NotFoundView /> },
       { path: "*", element: <Navigate to="/404" /> },
     ],
