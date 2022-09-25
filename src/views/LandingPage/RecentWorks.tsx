@@ -1,30 +1,14 @@
 import React, { ReactElement, useContext } from "react";
 import { Avatar, List, Menu, Skeleton, Tag } from "antd";
-import {
-  FiBookmark,
-  FiCheckCircle,
-  FiList,
-  FiXOctagon,
-  FiZap,
-} from "react-icons/fi";
-import {
-  MailOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-  AimOutlined,
-  CrownOutlined,
-  FireOutlined,
-  FormatPainterOutlined,
-} from "@ant-design/icons";
-import { Empty } from "antd";
+import { FiBookmark, FiCheckCircle, FiList, FiZap } from "react-icons/fi";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import api from "../../api";
 import { userContext, UserInfo } from "../../layouts/AuthenticatedLayout";
-import list from "antd/lib/transfer/list";
 import style from "./index.module.scss";
 import { useMediaQuery } from "react-responsive";
 import { issueType, issueStatusColorCodes } from "../../utils/globalVars";
+import { useNavigate } from "react-router-dom";
 
 const LandingPageTabs = {
   workedOn: "workedOn",
@@ -34,6 +18,7 @@ const LandingPageTabs = {
 };
 
 export default () => {
+  const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState(LandingPageTabs.workedOn);
   const userDetails: any = useContext(userContext);
   const mode = useMediaQuery({ maxWidth: 1224 }) ? "vertical" : "horizontal";
@@ -101,7 +86,7 @@ export default () => {
               <List.Item.Meta
                 avatar={issueType[item.issue_type]}
                 title={
-                  <a href="https://ant.design">
+                  <a onClick={() => navigate(`/app/issue/${item.id}`)}>
                     {item.issue_title}
                     <Tag
                       color={issueStatusColorCodes[item.issue_status]}
