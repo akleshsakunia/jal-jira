@@ -8,6 +8,7 @@ import IssueTitle from "./IssueTitle";
 import IssueSkeleton from "./IssueSkeleton";
 import { issueType } from "../../utils/globalVars";
 import IssueActions from "./IssueActions";
+import IssueDescription from "./IssueDescription";
 
 const { Paragraph, Title } = Typography;
 
@@ -56,10 +57,12 @@ export default () => {
             <Row>
               <IssueActions />
             </Row>
-            {/*<Row>
-              <IssueDescription />
-            </Row>
             <Row>
+              <Col span={24}>
+                <IssueDescription />
+              </Col>
+            </Row>
+            {/* <Row>
               <IssueActivity />
             </Row> */}
           </Col>

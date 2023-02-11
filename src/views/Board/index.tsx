@@ -8,14 +8,11 @@ import api from "../../api";
 import * as _ from "lodash";
 import { issueStatus } from "../../utils/globalVars";
 
-const Container = styled.div`
-  flex: 1;
-`;
-
 const StackedContainer = styled.div`
   display: inline;
-  // flex-direction: column;
+  flex-direction: column;
   flex: 1;
+  max-width: calc((100vw - 160px) / 4);
 `;
 
 export default () => {
@@ -96,11 +93,12 @@ export default () => {
     return data;
   };
 
-  const { isLoading, isSuccess, isError, data: projectData } = useQuery(
-    "board",
-    fetchBoardItems,
-    { refetchInterval: false }
-  );
+  const {
+    isLoading,
+    isSuccess,
+    isError,
+    data: projectData,
+  } = useQuery("board", fetchBoardItems, { refetchInterval: false });
 
   const updateIssue = async (issueId: any, destStatus: string) => {
     issueId = +issueId.replace("task-", "");
@@ -177,22 +175,22 @@ export default () => {
     <DragDropContext onDragEnd={onDragEnd}>
       {state && (
         <div style={{ display: "flex" }}>
-          <Container>
-            {[issueStatus.TODO].map((col: string) => {
+          <StackedContainer>
+            {[issueStatus.TODO, issueStatus.BLOCKED].map((col: string) => {
+              const column = state.columns[col];
+              const tasks = column.taskIds.map(
+                (taskId: any) => state.tasks[taskId]
+              );
+              return <Column key={column.id} column={column} tasks={tasks} />;
+            })}
+          </StackedContainer>
+          <StackedContainer>
+            {[issueStatus.IN_PROG].map((col: string) => {
               const column = state.columns[col];
               const tasks = column.taskIds.map(
                 (taskId: any) => state.tasks[taskId]
               );
 
-              return <Column key={column.id} column={column} tasks={tasks} />;
-            })}
-          </Container>
-          <StackedContainer>
-            {[issueStatus.IN_PROG, issueStatus.BLOCKED].map((col: string) => {
-              const column = state.columns[col];
-              const tasks = column.taskIds.map(
-                (taskId: any) => state.tasks[taskId]
-              );
               return <Column key={column.id} column={column} tasks={tasks} />;
             })}
           </StackedContainer>
@@ -205,7 +203,7 @@ export default () => {
               return <Column key={column.id} column={column} tasks={tasks} />;
             })}
           </StackedContainer>
-          <Container>
+          <StackedContainer>
             {[issueStatus.DONE].map((col: string) => {
               const column = state.columns[col];
               const tasks = column.taskIds.map(
@@ -214,7 +212,7 @@ export default () => {
 
               return <Column key={column.id} column={column} tasks={tasks} />;
             })}
-          </Container>
+          </StackedContainer>
         </div>
       )}
     </DragDropContext>
