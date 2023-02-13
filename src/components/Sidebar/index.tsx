@@ -23,7 +23,6 @@ export default () => {
     <Sider
       width={200}
       className="site-layout-background"
-      // style={{ overflow: "scroll" }}
       collapsible
       collapsed={collapsed}
       onCollapse={(collapsed) => setCollapsed(collapsed)}

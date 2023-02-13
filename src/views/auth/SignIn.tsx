@@ -25,7 +25,7 @@ export default () => {
   };
 
   return (
-    <Row justify="space-around" align="middle" style={{ height: "100vh" }}>
+    <Row justify="space-around" align="middle" style={{ minHeight: "100vh" }}>
       <Col flex="300px">
         <Form
           name="normal_login"

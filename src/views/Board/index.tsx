@@ -20,7 +20,7 @@ export default () => {
   const fetchBoardItems = async () => {
     let { data } = await api.sprint.board();
     data = data.map((element: any) => {
-      return { ...element, id: `task-${element.id}` };
+      return { ...element, id: `${element.id}` };
     });
 
     let init_data = {
@@ -101,7 +101,6 @@ export default () => {
   } = useQuery("board", fetchBoardItems, { refetchInterval: false });
 
   const updateIssue = async (issueId: any, destStatus: string) => {
-    issueId = +issueId.replace("task-", "");
     const reqData = { issue_status: destStatus };
     const res = await api.issues.updateIssue(issueId, reqData);
   };

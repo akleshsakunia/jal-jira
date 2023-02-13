@@ -22,13 +22,6 @@ const TaskList = styled.div<{ isDraggingOver: boolean; ref: any }>`
   min-height: 30vh;
 `;
 
-// linear-gradient(
-//   130deg
-//   ,#ff7a18,#af002d 41.07%,#319197 76.05%)`
-// : `linear-gradient(
-//   45deg
-//   ,#ff7a18,#af002d 41.07%,#319197 76.05%)`};
-
 export default (props: any) => {
   return (
     <Container>

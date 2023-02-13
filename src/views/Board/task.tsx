@@ -4,6 +4,7 @@ import { Draggable } from "react-beautiful-dnd";
 import Avatar from "antd/lib/avatar/avatar";
 import { issueType } from "../../utils/globalVars";
 import style from "./index.module.scss";
+import { useNavigate } from "react-router";
 
 const Container = styled.div<{ isDragging: boolean; ref: any }>`
   border: 1px solid lightgrey;
@@ -14,6 +15,7 @@ const Container = styled.div<{ isDragging: boolean; ref: any }>`
 `;
 
 export default (props: any) => {
+  const navigate = useNavigate();
   return (
     <Draggable draggableId={props.task.id} index={props.index}>
       {(provided, snapshot) => (
@@ -23,7 +25,7 @@ export default (props: any) => {
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          <div>
+          <div onClick={() => navigate(`/app/issue/${props.task.id}`)}>
             <span className={style.issueText}>
               <span className={style.issueIcon}>
                 {issueType[props.task.issue_type]}

@@ -9,6 +9,7 @@ import IssueSkeleton from "./IssueSkeleton";
 import { issueType } from "../../utils/globalVars";
 import IssueActions from "./IssueActions";
 import IssueDescription from "./IssueDescription";
+import Comments from "./Comments";
 
 const { Paragraph, Title } = Typography;
 
@@ -59,7 +60,15 @@ export default () => {
             </Row>
             <Row>
               <Col span={24}>
-                <IssueDescription />
+                <IssueDescription
+                  issueId={+issueId}
+                  initialVal={issueData.description}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Comments issueId={+issueId} />
               </Col>
             </Row>
             {/* <Row>

@@ -44,7 +44,7 @@ export default ({}) => {
   } = useQuery("userdetails", fetchUserDetails, { refetchInterval: false });
 
   return (
-    <Layout style={{ height: "100vh" }}>
+    <Layout style={{ minHeight: "100vh" }}>
       {isSuccess && (
         <userContext.Provider value={userData}>
           <Navbar />

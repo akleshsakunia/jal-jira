@@ -59,6 +59,11 @@ export default {
         method: "GET",
         url: `/issues/${issueId}/`,
       }),
+    getComments: (issueId: number) =>
+      instance({
+        method: "GET",
+        url: `${issueId}/comments/`,
+      }),
   },
   projects: {
     getMyProjects: () =>
