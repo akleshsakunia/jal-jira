@@ -71,6 +71,16 @@ export default {
         method: "GET",
         url: `get-my-projects/`,
       }),
+    getAllProjectUsers: (projectId: number) =>
+      instance({
+        method: "GET",
+        url: `project/${projectId}/users/`,
+      }),
+    getAllProjectSprints: (projectId: number) =>
+      instance({
+        method: "GET",
+        url: `project/${projectId}/sprints/`,
+      }),
   },
   sprint: {
     board: () =>
@@ -79,6 +89,7 @@ export default {
         url: `board/`,
       }),
   },
+
   // getMyTodos: (issueId) =>
   //   instance({
   //     method: 'GET',

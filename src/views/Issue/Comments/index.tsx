@@ -1,8 +1,9 @@
-import { List, Comment } from "antd";
+import { List } from "antd";
 import { useQuery } from "react-query";
 import api from "../../../api";
 import { storage } from "../../../firebase";
 import { ref, getDownloadURL } from "firebase/storage";
+import { Comment } from "@ant-design/compatible";
 
 export default ({ issueId }: { issueId: number }) => {
   const getIssueComments = async () => {
@@ -31,6 +32,7 @@ export default ({ issueId }: { issueId: number }) => {
     <>no Comments</>
   ) : (
     <List
+      style={{ padding: "1rem", background: "#fff" }}
       className="comment-list"
       header={`${comments.length} replies`}
       itemLayout="horizontal"
@@ -39,10 +41,10 @@ export default ({ issueId }: { issueId: number }) => {
         <li>
           <Comment
             // actions={item.actions}
-            // author={item.author}
+            author={item.user_info.username}
             avatar={item.avatar_url}
             content={item.comment}
-            datetime={item.datetime}
+            datetime={item.created_on}
           />
         </li>
       )}

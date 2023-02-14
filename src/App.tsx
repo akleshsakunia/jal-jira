@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.scss";
 import { useRoutes, BrowserRouter as Router } from "react-router-dom";
-import "antd/dist/antd.css";
 import routes from "./routes";
 import auth from "./utils/auth";
 import { QueryClient, QueryClientProvider } from "react-query";

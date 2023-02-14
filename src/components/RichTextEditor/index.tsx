@@ -23,7 +23,6 @@ export default ({
         initialValue={initialValue}
         init={{
           height: "60vh",
-          width: "60vw",
           menubar: false,
           plugins: [
             "advlist autolink lists link image charmap print preview anchor",

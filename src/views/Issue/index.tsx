@@ -10,6 +10,7 @@ import { issueType } from "../../utils/globalVars";
 import IssueActions from "./IssueActions";
 import IssueDescription from "./IssueDescription";
 import Comments from "./Comments";
+import IssueSider from "./IssueSider";
 
 const { Paragraph, Title } = Typography;
 
@@ -33,7 +34,7 @@ export default () => {
         <IssueSkeleton />
       ) : isSuccess ? (
         <Row>
-          <Col span={16}>
+          <Col span={24}>
             <Row>
               <Col span={24}>
                 <Row>
@@ -59,28 +60,28 @@ export default () => {
               <IssueActions />
             </Row>
             <Row>
-              <Col span={24}>
-                <IssueDescription
-                  issueId={+issueId}
-                  initialVal={issueData.description}
-                />
+              <Col span={18}>
+                <Row>
+                  <Col span={24}>
+                    <IssueDescription
+                      issueId={+issueId}
+                      initialVal={issueData.description}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={24}>
+                    <Comments issueId={+issueId} />
+                  </Col>
+                </Row>
+              </Col>
+              <Col span={6}>
+                <Row style={{ padding: "0rem 1rem" }}>
+                  <IssueSider issueData={issueData} />
+                </Row>
               </Col>
             </Row>
-            <Row>
-              <Col span={24}>
-                <Comments issueId={+issueId} />
-              </Col>
-            </Row>
-            {/* <Row>
-              <IssueActivity />
-            </Row> */}
           </Col>
-
-          {/* <Col>
-            <Row>
-              <IssueSideBar />
-            </Row>
-          </Col> */}
         </Row>
       ) : (
         <NotFoundView />
