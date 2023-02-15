@@ -1,7 +1,4 @@
-import React from "react";
 import { Select, Typography } from "antd";
-import api from "../../../api";
-import { useQuery } from "react-query";
 
 export const AssigneeInput = ({
   handleUpdate,

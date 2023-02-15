@@ -1,4 +1,4 @@
-import { DatePicker, DatePickerProps, Select, Typography } from "antd";
+import { DatePicker, DatePickerProps, Typography } from "antd";
 import dayjs from "dayjs";
 
 import customParseFormat from "dayjs/plugin/customParseFormat";

@@ -20,12 +20,7 @@ export const SprintInput = ({
     return sprintOptions;
   };
 
-  const {
-    isLoading,
-    isSuccess,
-    isError,
-    data: allActiveSprints,
-  } = useQuery(
+  const { data: allActiveSprints } = useQuery(
     "getAllActiveSprintsInCurrentProject",
     getAllActiveSprintsInCurrentProject,
     {

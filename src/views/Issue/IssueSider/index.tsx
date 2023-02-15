@@ -23,12 +23,9 @@ export default ({ issueData }: { issueData: any }) => {
     return userOptions;
   };
 
-  const {
-    isLoading,
-    isSuccess,
-    isError,
-    data: allProjectUsers,
-  } = useQuery("getAllUsers", getAllUsers, { refetchInterval: false });
+  const { data: allProjectUsers } = useQuery("getAllUsers", getAllUsers, {
+    refetchInterval: false,
+  });
 
   const handleUpdate = (key: string, value: any) =>
     updateIssue(+issueData.id, key, value);

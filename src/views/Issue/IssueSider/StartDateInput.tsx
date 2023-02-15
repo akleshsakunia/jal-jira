@@ -1,10 +1,10 @@
-import { DatePicker, DatePickerProps, Select, Typography } from "antd";
+import { DatePicker, DatePickerProps, Typography } from "antd";
 import dayjs from "dayjs";
 
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
-const dateTimeFormat = "YYYY-MM-DD[T]H:mm:ss[Z]";
+const dateTimeFormat = "YYYY-MM-DD[T]H:mm:ss[Z]"; // for use in datetime field from django
 const dateFormat = "YYYY-MM-DD";
 
 export const StartDateInput = ({
