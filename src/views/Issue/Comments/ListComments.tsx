@@ -10,10 +10,12 @@ import {
   Dispatch,
   forwardRef,
   SetStateAction,
+  useContext,
   useEffect,
   useImperativeHandle,
   useState,
 } from "react";
+import { commentContext } from ".";
 
 export default forwardRef(
   (
@@ -24,7 +26,8 @@ export default forwardRef(
     },
     ref
   ) => {
-    const [refreshToggle, setRefreshToggle] = useState(false);
+    const [shouldTriggerUpdate, setShouldTriggerUpdate] =
+      useContext(commentContext);
     const getIssueComments = async () => {
       let { data } = await api.issues.getComments(+issueId);
       // const ImageURL = await getDownloadURL(
@@ -39,18 +42,12 @@ export default forwardRef(
       return data;
     };
 
-    useImperativeHandle(ref, () => ({
-      refreshComments() {
-        setRefreshToggle(!refreshToggle);
-      },
-    }));
-
     const {
       isLoading,
       isSuccess,
       isError,
       data: comments,
-    } = useQuery(["getIssueComments", refreshToggle], getIssueComments, {
+    } = useQuery(["getIssueComments", shouldTriggerUpdate], getIssueComments, {
       refetchInterval: false,
     });
 

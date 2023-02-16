@@ -1,15 +1,12 @@
 import Title from "antd/es/typography/Title";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import api from "../../../api";
 import RichTextEditor from "../../../components/RichTextEditor";
+import { commentContext } from "./index";
 
-export default ({
-  issueId,
-  updateListComments,
-}: {
-  issueId: number;
-  updateListComments: () => void;
-}) => {
+export default ({ issueId }: { issueId: number }) => {
+  const [shouldTriggerUpdate, setShouldTriggerUpdate] =
+    useContext(commentContext);
   const [initialValue, setInitialValue] = useState("");
   const updateIssue = async (editedVal: string) => {
     const reqData = {
@@ -20,7 +17,7 @@ export default ({
   };
   const handleOnSave = (editedVal: string) => {
     updateIssue(editedVal);
-    updateListComments();
+    setTimeout(() => setShouldTriggerUpdate(!shouldTriggerUpdate), 1000);
   };
 
   return (

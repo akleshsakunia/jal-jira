@@ -1,21 +1,28 @@
-import { createRef, useRef, useState } from "react";
+import {
+  createContext,
+  createRef,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import AddComments from "./AddComments";
 import ListComments from "./ListComments";
 
+export const commentContext = createContext<
+  [boolean, Dispatch<SetStateAction<boolean>>]
+>([false, () => {}]);
+
 export default ({ issueId }: { issueId: number }) => {
-  const updateListCommentsFn = createRef<{
-    refreshComments(): void;
-  }>();
+  const [shouldTriggerUpdate, setShouldTriggerUpdate] = useState(false);
 
   return (
-    <>
-      <AddComments
-        issueId={issueId}
-        updateListComments={() => {
-          updateListCommentsFn.current?.refreshComments();
-        }}
-      />
-      <ListComments issueId={issueId} ref={updateListCommentsFn} />
-    </>
+    <commentContext.Provider
+      value={[shouldTriggerUpdate, setShouldTriggerUpdate]}
+    >
+      <AddComments issueId={issueId} />
+      <ListComments issueId={issueId} />
+    </commentContext.Provider>
   );
 };
