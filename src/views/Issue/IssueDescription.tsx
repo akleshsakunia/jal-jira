@@ -12,5 +12,5 @@ export default ({
     const res = await api.issues.updateIssue(issueId, reqData);
   };
   const handleOnSave = (editedVal: string) => updateIssue(issueId, editedVal);
-  return <RichTextEditor initialValue={initialVal} onSave={handleOnSave} />;
+  return <RichTextEditor onSave={handleOnSave} initialValue={initialVal} />;
 };

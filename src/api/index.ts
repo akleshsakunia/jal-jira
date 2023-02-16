@@ -64,6 +64,12 @@ export default {
         method: "GET",
         url: `${issueId}/comments/`,
       }),
+    postComments: (data: object) =>
+      instance({
+        method: "POST",
+        url: `/comments/`,
+        data: data,
+      }),
   },
   projects: {
     getMyProjects: () =>

@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import api from "../../api";
 import { useParams } from "react-router-dom";
 import NotFoundView from "../NotFoundView";
-import { Row, Col, Typography, Tag } from "antd";
+import { Row, Col, Typography, Tag, Divider } from "antd";
 import IssueTitle from "./IssueTitle";
 import IssueSkeleton from "./IssueSkeleton";
 import { issueType } from "../../utils/globalVars";
@@ -69,6 +69,7 @@ export default () => {
                     />
                   </Col>
                 </Row>
+                <Divider />
                 <Row>
                   <Col span={24}>
                     <Comments issueId={+issueId} />

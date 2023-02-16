@@ -6,12 +6,14 @@ import styled from "styled-components";
 import StyledButton from "../StyledButton";
 
 export default ({
-  initialValue,
   onSave,
+  initialValue,
+  height = "60vh",
   buttonTitle = "Save",
 }: {
-  initialValue: string;
   onSave: (editedVal: string) => void;
+  initialValue?: string;
+  height?: string;
   buttonTitle?: string;
 }) => {
   const editorRef = useRef<TinyMCEEditor | null>(null);
@@ -22,7 +24,7 @@ export default ({
         onInit={(evt, editor) => (editorRef.current = editor)}
         initialValue={initialValue}
         init={{
-          height: "60vh",
+          height: height,
           menubar: false,
           plugins: [
             "advlist autolink lists link image charmap print preview anchor",
@@ -38,10 +40,18 @@ export default ({
           content_style:
             "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
           init_instance_callback: () => {
-            const freeTiny = document.querySelector(
-              ".tox-notification"
-            ) as HTMLElement;
-            freeTiny.style.display = "none";
+            const freeTiny = [
+              ...(document.querySelectorAll(
+                ".tox-statusbar"
+              ) as unknown as HTMLElement[]),
+              ...(document.querySelectorAll(
+                ".tox-notification"
+              ) as unknown as HTMLElement[]),
+            ];
+
+            freeTiny.forEach(
+              (tinyMce: any) => (tinyMce.style.display = "none")
+            );
           },
         }}
       />

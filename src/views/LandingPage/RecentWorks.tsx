@@ -84,7 +84,7 @@ export default () => {
           >
             <Skeleton avatar title={false} loading={isLoading} active>
               <List.Item.Meta
-                avatar={issueType[item.issue_type]}
+                avatar={<Avatar src={issueType[item.issue_type]} />}
                 title={
                   <a onClick={() => navigate(`/app/issue/${item.id}`)}>
                     {item.issue_title}
