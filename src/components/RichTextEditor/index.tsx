@@ -8,11 +8,13 @@ import StyledButton from "../StyledButton";
 export default ({
   onSave,
   initialValue,
+  onSaveClearEditor = false,
   height = "60vh",
   buttonTitle = "Save",
 }: {
   onSave: (editedVal: string) => void;
   initialValue?: string;
+  onSaveClearEditor?: boolean;
   height?: string;
   buttonTitle?: string;
 }) => {
@@ -56,9 +58,12 @@ export default ({
         }}
       />
       <StyledButton
-        onClick={() =>
-          editorRef.current && onSave(editorRef.current.getContent())
-        }
+        onClick={() => {
+          if (editorRef.current) {
+            onSave(editorRef.current.getContent());
+            onSaveClearEditor && editorRef.current.setContent("");
+          }
+        }}
       >
         {buttonTitle}
       </StyledButton>

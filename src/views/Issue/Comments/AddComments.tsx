@@ -1,5 +1,6 @@
 import Title from "antd/es/typography/Title";
 import { useContext, useState } from "react";
+import { flushSync } from "react-dom";
 import api from "../../../api";
 import RichTextEditor from "../../../components/RichTextEditor";
 import { commentContext } from "./index";
@@ -7,13 +8,12 @@ import { commentContext } from "./index";
 export default ({ issueId }: { issueId: number }) => {
   const [shouldTriggerUpdate, setShouldTriggerUpdate] =
     useContext(commentContext);
-  const [initialValue, setInitialValue] = useState("");
   const updateIssue = async (editedVal: string) => {
     const reqData = {
       issue_id: issueId,
       comment: editedVal,
     };
-    await api.issues.postComments(reqData).then(() => setInitialValue(""));
+    await api.issues.postComments(reqData);
   };
   const handleOnSave = (editedVal: string) => {
     updateIssue(editedVal);
@@ -24,7 +24,7 @@ export default ({ issueId }: { issueId: number }) => {
     <>
       <Title level={5}>Add Comments</Title>
       <RichTextEditor
-        initialValue={initialValue}
+        onSaveClearEditor={true}
         onSave={handleOnSave}
         height="30vh"
         buttonTitle="Add"
