@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
 import {
   AppstoreAddOutlined,
@@ -7,13 +7,11 @@ import {
   FileSearchOutlined,
   InboxOutlined,
   LaptopOutlined,
-  NotificationOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const { Sider } = Layout;
 
 export default () => {
   const navigate = useNavigate();
@@ -27,13 +25,7 @@ export default () => {
       collapsed={collapsed}
       onCollapse={(collapsed) => setCollapsed(collapsed)}
     >
-      <Menu
-        theme="dark"
-        mode="inline"
-        // defaultSelectedKeys={["3"]}
-        // defaultOpenKeys={["sub1"]}
-        style={{ height: "100%", borderRight: 0 }}
-      >
+      <Menu theme="dark" mode="inline">
         <Menu.Item key="1" icon={<ClusterOutlined />}>
           Roadmap
         </Menu.Item>
