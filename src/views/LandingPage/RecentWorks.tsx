@@ -1,5 +1,5 @@
 import React, { ReactElement, useContext } from "react";
-import { Avatar, List, Menu, Skeleton, Tag } from "antd";
+import { Avatar, Col, List, Menu, Row, Skeleton, Tag } from "antd";
 import { FiBookmark, FiCheckCircle, FiList, FiZap } from "react-icons/fi";
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -9,6 +9,8 @@ import style from "./index.module.scss";
 import { useMediaQuery } from "react-responsive";
 import { issueType, issueStatusColorCodes } from "../../utils/globalVars";
 import { useNavigate } from "react-router-dom";
+import Text from "antd/es/typography/Text";
+import Paragraph from "antd/es/typography/Paragraph";
 
 const LandingPageTabs = {
   workedOn: "workedOn",
@@ -75,30 +77,38 @@ export default () => {
         itemLayout="horizontal"
         dataSource={allMyIssues}
         renderItem={(item: any) => (
-          <List.Item
-            actions={[
-              // <a key="list-loadmore-edit">edit</a>,
-              // <a key="list-loadmore-more">more</a>,
-              <span>Priority: {item.priority}</span>,
-            ]}
-          >
+          <List.Item actions={[<span>Priority: {item.priority}</span>]}>
             <Skeleton avatar title={false} loading={isLoading} active>
-              <List.Item.Meta
-                avatar={<Avatar src={issueType[item.issue_type]} />}
-                title={
-                  <a onClick={() => navigate(`/app/issue/${item.id}`)}>
-                    {item.issue_title}
-                    <Tag
-                      color={issueStatusColorCodes[item.issue_status]}
-                      className="tags"
-                    >
-                      {item.issue_status}
-                    </Tag>
-                  </a>
-                }
-                description={`Issue Id: ${item.uid}`}
-              />
-              <div>{item.description}</div>
+              <Row style={{ width: "100%" }}>
+                <Col span={12}>
+                  <List.Item.Meta
+                    avatar={<Avatar src={issueType[item.issue_type]} />}
+                    title={
+                      <a onClick={() => navigate(`/app/issue/${item.id}`)}>
+                        {item.issue_title}
+                        <Tag
+                          color={issueStatusColorCodes[item.issue_status]}
+                          className="tags"
+                        >
+                          {item.issue_status}
+                        </Tag>
+                      </a>
+                    }
+                    description={`Issue Id: ${item.uid}`}
+                  />
+                </Col>
+                <Col span={12}>
+                  <Paragraph
+                    ellipsis={{ rows: 1, expandable: true, symbol: "more" }}
+                    style={{ width: "25vw" }}
+                    type="secondary"
+                  >
+                    <span
+                      dangerouslySetInnerHTML={{ __html: item.description }}
+                    />
+                  </Paragraph>
+                </Col>
+              </Row>
             </Skeleton>
           </List.Item>
         )}
