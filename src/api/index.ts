@@ -89,10 +89,10 @@ export default {
       }),
   },
   sprint: {
-    board: () =>
+    board: (projectKey?: number | string) =>
       instance({
         method: "GET",
-        url: `board/`,
+        url: `board/${projectKey}`,
       }),
   },
 
