@@ -14,7 +14,6 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import * as _ from "lodash";
 import AddProject from "../../views/AddItems/AddProject";
-import AddItems from "../../views/AddItems";
 import AddSprint from "../../views/AddItems/AddSprint";
 import AddIssue from "../../views/AddItems/AddIssue";
 
