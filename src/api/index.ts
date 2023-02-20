@@ -87,6 +87,12 @@ export default {
         method: "GET",
         url: `project/${projectId}/sprints/`,
       }),
+    addProject: (projectData: object) =>
+      instance({
+        method: "POST",
+        url: `/projects/`,
+        data: projectData,
+      }),
   },
   sprint: {
     board: (projectKey?: number | string) =>
