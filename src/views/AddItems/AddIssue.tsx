@@ -1,5 +1,10 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Button, Modal } from "antd";
+import { DatePicker, Form, Input, Modal, Select } from "antd";
+import api from "../../api";
+import RichTextEditor from "../../components/RichTextEditor";
+
+const dateFormat = "YYYY-MM-DD";
+const dateTimeFormat = "YYYY-MM-DD[T]H:mm:ss[Z]";
 
 export default ({
   open,
@@ -8,32 +13,68 @@ export default ({
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState("Content of the modal");
-
-  const handleOk = () => {
-    setModalText("The modal will be closed after two seconds");
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
+  const [form] = Form.useForm();
+  const [description, setDescription] = useState("");
 
   const handleCancel = () => {
     setOpen(false);
   };
 
+  const onCreate = async (values: any) => {
+    const finalValue = {
+      ...values,
+      description: description,
+      reported_on: values?.reported_on?.format(dateTimeFormat),
+    };
+    console.log(finalValue);
+    await api.issues.addIssue(finalValue);
+  };
+
   return (
     <>
       <Modal
-        title="Title"
+        title="Create Issue"
         open={open}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
+        onOk={() => {
+          form
+            .validateFields()
+            .then((values) => {
+              form.resetFields();
+              onCreate(values);
+            })
+            .catch((info) => {
+              console.log("Validate Failed:", info);
+            });
+        }}
+        okText="Create"
+        cancelText="Cancel"
         onCancel={handleCancel}
+        width={"70vw"}
       >
-        I am Issuemodal
+        <Form
+          form={form}
+          name="basic"
+          labelCol={{ span: 4 }}
+          wrapperCol={{ span: 20 }}
+          initialValues={{ remember: true }}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Issue title"
+            name="issue_title"
+            rules={[{ required: true, message: "Please add Issue Title!" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item label="Description" name="description">
+            <RichTextEditor onChange={setDescription} height={"30vh"} />
+          </Form.Item>
+
+          <Form.Item label="Reported on" name="reported_on">
+            <DatePicker />
+          </Form.Item>
+        </Form>
       </Modal>
     </>
   );

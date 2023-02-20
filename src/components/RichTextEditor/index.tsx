@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { Dispatch, SetStateAction, useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Editor as TinyMCEEditor } from "tinymce";
 
@@ -8,12 +8,14 @@ import StyledButton from "../StyledButton";
 export default ({
   onSave,
   initialValue,
+  onChange,
   onSaveClearEditor = false,
   height = "60vh",
   buttonTitle = "Save",
 }: {
-  onSave: (editedVal: string) => void;
+  onSave?: (editedVal: string) => void;
   initialValue?: string;
+  onChange?: Dispatch<SetStateAction<string>>;
   onSaveClearEditor?: boolean;
   height?: string;
   buttonTitle?: string;
@@ -23,6 +25,7 @@ export default ({
   return (
     <>
       <Editor
+        onEditorChange={(val) => onChange && onChange(val)}
         onInit={(evt, editor) => (editorRef.current = editor)}
         initialValue={initialValue}
         init={{
@@ -57,16 +60,20 @@ export default ({
           },
         }}
       />
-      <StyledButton
-        onClick={() => {
-          if (editorRef.current) {
-            onSave(editorRef.current.getContent());
-            onSaveClearEditor && editorRef.current.setContent("");
-          }
-        }}
-      >
-        {buttonTitle}
-      </StyledButton>
+      {!onChange ? (
+        <StyledButton
+          onClick={() => {
+            if (editorRef.current) {
+              onSave && onSave(editorRef.current.getContent());
+              onSaveClearEditor && editorRef.current.setContent("");
+            }
+          }}
+        >
+          {buttonTitle}
+        </StyledButton>
+      ) : (
+        ""
+      )}
     </>
   );
 };

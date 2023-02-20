@@ -70,6 +70,12 @@ export default {
         url: `/comments/`,
         data: data,
       }),
+    addIssue: (issueData: object) =>
+      instance({
+        method: "POST",
+        url: `/issues/`,
+        data: issueData,
+      }),
   },
   projects: {
     getMyProjects: () =>
