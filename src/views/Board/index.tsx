@@ -8,6 +8,7 @@ import api from "../../api";
 import * as _ from "lodash";
 import { issueStatus } from "../../utils/globalVars";
 import ProjectDropdown from "./ProjectDropdown";
+import Typography from "antd/es/typography";
 
 const StackedContainer = styled.div`
   display: inline;
@@ -178,10 +179,13 @@ export default () => {
   return (
     <>
       {selectedProject && (
-        <ProjectDropdown
-          selectedkey={selectedProject}
-          setSelectedProject={setSelectedProject}
-        />
+        <>
+          <Typography.Text>Select project:</Typography.Text>
+          <ProjectDropdown
+            selectedkey={selectedProject}
+            setSelectedProject={setSelectedProject}
+          />
+        </>
       )}
       <DragDropContext onDragEnd={onDragEnd}>
         {state && (

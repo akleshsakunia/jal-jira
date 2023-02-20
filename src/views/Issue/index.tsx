@@ -6,7 +6,7 @@ import NotFoundView from "../NotFoundView";
 import { Row, Col, Typography, Tag, Divider } from "antd";
 import IssueTitle from "./IssueTitle";
 import IssueSkeleton from "./IssueSkeleton";
-import { issueType } from "../../utils/globalVars";
+import { ISSUE_ICONS } from "../../utils/globalVars";
 import IssueActions from "./IssueActions";
 import IssueDescription from "./IssueDescription";
 import Comments from "./Comments";
@@ -40,7 +40,7 @@ export default () => {
                 <Row>
                   <Col span={24}>
                     <Paragraph>
-                      <Tag icon={issueType[issueData.issue_type]}>
+                      <Tag icon={ISSUE_ICONS[issueData.issue_type]}>
                         {issueData.uid}
                       </Tag>
                     </Paragraph>

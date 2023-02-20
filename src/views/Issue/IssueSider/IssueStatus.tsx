@@ -1,13 +1,5 @@
 import { Select, Typography } from "antd";
-
-const ISSUE_STATUS = [
-  { label: "INPROGRESS", value: "IN_PROG" },
-  { label: "DONE", value: "DONE" },
-  { label: "TESTING", value: "TESTING" },
-  { label: "TESTED", value: "TESTED" },
-  { label: "BLOCKED", value: "BLOCKED" },
-  { label: "TODO", value: "TODO" },
-];
+import { ISSUE_STATUS } from "../../../utils/globalVars";
 
 export const IssueStatusInput = ({
   handleUpdate,

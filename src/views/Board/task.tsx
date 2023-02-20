@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 import Avatar from "antd/lib/avatar/avatar";
-import { issueType } from "../../utils/globalVars";
+import { ISSUE_ICONS } from "../../utils/globalVars";
 import style from "./index.module.scss";
 import { useNavigate } from "react-router";
 
@@ -28,7 +28,7 @@ export default (props: any) => {
           <div onClick={() => navigate(`/app/issue/${props.task.id}`)}>
             <span className={style.issueText}>
               <span className={style.issueIcon}>
-                {issueType[props.task.issue_type]}
+                {ISSUE_ICONS[props.task.issue_type]}
               </span>
               {props.task.issue_title}
             </span>

@@ -7,7 +7,7 @@ import api from "../../api";
 import { userContext, UserInfo } from "../../layouts/AuthenticatedLayout";
 import style from "./index.module.scss";
 import { useMediaQuery } from "react-responsive";
-import { issueType, issueStatusColorCodes } from "../../utils/globalVars";
+import { ISSUE_ICONS, issueStatusColorCodes } from "../../utils/globalVars";
 import { useNavigate } from "react-router-dom";
 import Text from "antd/es/typography/Text";
 import Paragraph from "antd/es/typography/Paragraph";
@@ -82,7 +82,7 @@ export default () => {
               <Row style={{ width: "100%" }}>
                 <Col span={12}>
                   <List.Item.Meta
-                    avatar={<Avatar src={issueType[item.issue_type]} />}
+                    avatar={<Avatar src={ISSUE_ICONS[item.issue_type]} />}
                     title={
                       <a onClick={() => navigate(`/app/issue/${item.id}`)}>
                         {item.issue_title}

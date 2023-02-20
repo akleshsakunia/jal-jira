@@ -1,10 +1,5 @@
 import { Select, Typography } from "antd";
-
-const PRIORITY = [
-  { label: "HIGH", value: "HIGH" },
-  { label: "MEDIUM", value: "MEDIUM" },
-  { label: "LOW", value: "LOW" },
-];
+import { PRIORITY } from "../../../utils/globalVars";
 
 export const PriorityInput = ({
   handleUpdate,

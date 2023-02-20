@@ -7,9 +7,11 @@ import api from "../../api";
 export default ({
   selectedkey,
   setSelectedProject,
+  bordered = false,
 }: {
-  selectedkey: number | undefined;
+  selectedkey?: number | undefined;
   setSelectedProject: Dispatch<SetStateAction<number | undefined>>;
+  bordered?: boolean;
 }) => {
   const fetchProjects = async () => {
     const { data } = await api.projects.getMyProjects();
@@ -28,13 +30,12 @@ export default ({
   } = useQuery("projectOptions", fetchProjects, { refetchInterval: false });
   return (
     <>
-      <Typography.Text>Select project:</Typography.Text>
       {isSuccess && (
         <Select
           onChange={(projectKey) => setSelectedProject(projectKey)}
           defaultValue={selectedkey}
           style={{ width: 120 }}
-          bordered={false}
+          bordered={bordered}
           options={projectOptions}
         />
       )}

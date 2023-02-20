@@ -2,6 +2,13 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { DatePicker, Form, Input, Modal, Select } from "antd";
 import api from "../../api";
 import RichTextEditor from "../../components/RichTextEditor";
+import ProjectDropdown from "../Board/ProjectDropdown";
+import {
+  ESTIMATE,
+  ISSUE_STATUS,
+  ISSUE_TYPE,
+  PRIORITY,
+} from "../../utils/globalVars";
 
 const dateFormat = "YYYY-MM-DD";
 const dateTimeFormat = "YYYY-MM-DD[T]H:mm:ss[Z]";
@@ -15,6 +22,7 @@ export default ({
 }) => {
   const [form] = Form.useForm();
   const [description, setDescription] = useState("");
+  const [project, setProject] = useState<number | undefined>();
 
   const handleCancel = () => {
     setOpen(false);
@@ -25,9 +33,10 @@ export default ({
       ...values,
       description: description,
       reported_on: values?.reported_on?.format(dateTimeFormat),
+      project: project,
     };
     console.log(finalValue);
-    await api.issues.addIssue(finalValue);
+    // await api.issues.addIssue(finalValue);
   };
 
   return (
@@ -71,8 +80,28 @@ export default ({
             <RichTextEditor onChange={setDescription} height={"30vh"} />
           </Form.Item>
 
-          <Form.Item label="Reported on" name="reported_on">
+          <Form.Item label="Start date" name="start_date">
             <DatePicker />
+          </Form.Item>
+          <Form.Item label="Due date" name="resolution_date">
+            <DatePicker />
+          </Form.Item>
+
+          <Form.Item label="Estimate" name="estimate">
+            <Select options={ESTIMATE}></Select>
+          </Form.Item>
+          <Form.Item label="Issue Status" name="issue_status">
+            <Select options={ISSUE_STATUS}></Select>
+          </Form.Item>
+          <Form.Item label="Issue type" name="issue_type">
+            <Select options={ISSUE_TYPE}></Select>
+          </Form.Item>
+          <Form.Item label="Priority" name="priority">
+            <Select options={PRIORITY}></Select>
+          </Form.Item>
+
+          <Form.Item label="project" name="project">
+            <ProjectDropdown setSelectedProject={setProject} bordered={true} />
           </Form.Item>
         </Form>
       </Modal>
