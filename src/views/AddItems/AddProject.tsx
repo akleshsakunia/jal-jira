@@ -26,9 +26,6 @@ export default ({
 
   return (
     <>
-      {/* <Button type="primary" onClick={showModal}>
-        Open Modal with async logic
-      </Button> */}
       <Modal
         title="Title"
         open={open}
