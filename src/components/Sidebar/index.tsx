@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Layout, Menu, Breadcrumb, MenuProps } from "antd";
+import { Layout, Menu, Breadcrumb, MenuProps, Avatar } from "antd";
 import {
   AppstoreAddOutlined,
   AppstoreOutlined,
@@ -84,11 +84,14 @@ export default () => {
         style={{
           height: 32,
           margin: 16,
-          background: "rgba(255, 255, 255, 0.2)",
+          justifyContent: "center",
+          display: "flex",
           cursor: "pointer",
         }}
         onClick={() => navigate("/app/dashboard")}
-      />
+      >
+        <Avatar src={process.env.PUBLIC_URL + "/apple-touch-icon.png"} />
+      </div>
       <Menu
         selectedKeys={selectedKeys ? [selectedKeys] : []}
         onClick={onClick}
