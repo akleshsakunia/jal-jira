@@ -8,40 +8,28 @@ import {
   ContainerOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-import React from "react";
+import React, { useState } from "react";
+import Sider from "antd/es/layout/Sider";
 
 const { SubMenu } = Menu;
 
-export default class App extends React.Component {
-  state = {
-    collapsed: true,
-  };
+export default () => {
+  const [collapsed, setCollapsed] = useState(true);
 
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <Button
-          type="primary"
-          onClick={this.toggleCollapsed}
-          style={{ marginBottom: 16 }}
-        >
-          {React.createElement(
-            this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined
-          )}
-        </Button>
-        <Menu
-          // defaultSelectedKeys={["1"]}
-          // defaultOpenKeys={["sub1"]}
-          mode="inline"
-          theme="dark"
-          inlineCollapsed={this.state.collapsed}
-        >
+  return (
+    <div>
+      <Button
+        type="primary"
+        onClick={() => setCollapsed(!collapsed)}
+        style={{ marginBottom: 16 }}
+      >
+        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
+      </Button>
+      <Sider
+        collapsed={collapsed}
+        onCollapse={(collapsed) => setCollapsed(collapsed)}
+      >
+        <Menu mode="inline" theme="dark" inlineCollapsed={collapsed}>
           <Menu.Item key="1" icon={<PieChartOutlined />}>
             Option 1
           </Menu.Item>
@@ -70,7 +58,7 @@ export default class App extends React.Component {
             </SubMenu>
           </SubMenu>
         </Menu>
-      </div>
-    );
-  }
-}
+      </Sider>
+    </div>
+  );
+};

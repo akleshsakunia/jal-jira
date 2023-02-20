@@ -1,57 +1,101 @@
-import { useState } from "react";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { useEffect, useState } from "react";
+import { Layout, Menu, Breadcrumb, MenuProps } from "antd";
 import {
   AppstoreAddOutlined,
+  AppstoreOutlined,
   BarcodeOutlined,
   ClusterOutlined,
   FileSearchOutlined,
   InboxOutlined,
   LaptopOutlined,
+  MailOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import * as _ from "lodash";
 
+type MenuItem = Required<MenuProps>["items"][number];
+const MENU_ITEM_SLUG = {
+  roadmap: "/app/roadmap",
+  backlog: "/app/backlog",
+  board: "/app/board",
+  codeSnippets: "/app/code-snippets",
+  addIssue: "/app/add-issues",
+  addProject: "/app/add-project",
+  addSprint: "/app/add-sprint",
+  projectSettings: "/app/project-settings",
+};
+const MENU_ITEM_SLUG_MAP = { ...MENU_ITEM_SLUG, ..._.invert(MENU_ITEM_SLUG) };
 const { Sider } = Layout;
+
+function getItem(
+  label: React.ReactNode,
+  key?: React.Key | null,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: "group"
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem;
+}
+
+const items: MenuItem[] = [
+  getItem("Roadmap", "roadmap", <ClusterOutlined />),
+  getItem("Backlog", "backlog", <InboxOutlined />),
+  getItem("Board", "board", <BarcodeOutlined />),
+  getItem("Code Snippets", "codeSnippets", <LaptopOutlined />),
+  getItem("Project Pages", "projectPages", <FileSearchOutlined />),
+  getItem("Add Items", "addItems", <AppstoreAddOutlined />, [
+    getItem("Add Issue", "addIssue"),
+    getItem("Add Project", "addProject"),
+    getItem("Add Sprint", "addSprint"),
+  ]),
+  getItem("Project Settings", "projectSettings", <SettingOutlined />),
+];
 
 export default () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [collapsed, setCollapsed] = useState(true);
+  const [selectedKeys, setSelectedKeys] = useState<string>();
+  const onClick: MenuProps["onClick"] = (evt: { key: string }) => {
+    navigate(MENU_ITEM_SLUG_MAP[evt.key as keyof typeof MENU_ITEM_SLUG_MAP]);
+  };
+
+  useEffect(() => {
+    setSelectedKeys(
+      MENU_ITEM_SLUG_MAP[location.pathname as keyof typeof MENU_ITEM_SLUG_MAP]
+    );
+  }, [onClick]);
 
   return (
     <Sider
-      width={200}
-      className="site-layout-background"
       collapsible
       collapsed={collapsed}
       onCollapse={(collapsed) => setCollapsed(collapsed)}
+      reverseArrow={true}
     >
-      <Menu theme="dark" mode="inline">
-        <Menu.Item key="1" icon={<ClusterOutlined />}>
-          Roadmap
-        </Menu.Item>
-        <Menu.Item key="2" icon={<InboxOutlined />}>
-          Backlog
-        </Menu.Item>
-        <Menu.Item
-          key="3"
-          icon={<BarcodeOutlined />}
-          onClick={() => navigate("/app/board")}
-        >
-          Board
-        </Menu.Item>
-        <Menu.Item key="4" icon={<LaptopOutlined />}>
-          Code Snippets
-        </Menu.Item>
-        <Menu.Item key="5" icon={<FileSearchOutlined />}>
-          Project Pages
-        </Menu.Item>
-        <Menu.Item key="6" icon={<AppstoreAddOutlined />}>
-          Add Items
-        </Menu.Item>
-        <Menu.Item key="7" icon={<SettingOutlined />}>
-          Project Settings
-        </Menu.Item>
-      </Menu>
+      <div
+        style={{
+          height: 32,
+          margin: 16,
+          background: "rgba(255, 255, 255, 0.2)",
+          cursor: "pointer",
+        }}
+        onClick={() => navigate("/app/dashboard")}
+      />
+      <Menu
+        selectedKeys={selectedKeys ? [selectedKeys] : []}
+        onClick={onClick}
+        mode="inline"
+        items={items}
+        theme="dark"
+      />
     </Sider>
   );
 };
