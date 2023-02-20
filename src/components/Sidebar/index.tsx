@@ -13,6 +13,10 @@ import {
 } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as _ from "lodash";
+import AddProject from "../../views/AddItems/AddProject";
+import AddItems from "../../views/AddItems";
+import AddSprint from "../../views/AddItems/AddSprint";
+import AddIssue from "../../views/AddItems/AddIssue";
 
 type MenuItem = Required<MenuProps>["items"][number];
 const MENU_ITEM_SLUG = {
@@ -63,8 +67,16 @@ export default () => {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(true);
   const [selectedKeys, setSelectedKeys] = useState<string>();
+  const [openModalKey, setOpenModalKey] = useState<string>();
+
+  const [open, setOpen] = useState(true);
+
   const onClick: MenuProps["onClick"] = (evt: { key: string }) => {
-    navigate(MENU_ITEM_SLUG_MAP[evt.key as keyof typeof MENU_ITEM_SLUG_MAP]);
+    if (["addIssue", "addProject", "addSprint"].includes(evt.key)) {
+      setOpenModalKey(evt.key);
+      setOpen(true);
+    } else
+      navigate(MENU_ITEM_SLUG_MAP[evt.key as keyof typeof MENU_ITEM_SLUG_MAP]);
   };
 
   useEffect(() => {
@@ -99,6 +111,15 @@ export default () => {
         items={items}
         theme="dark"
       />
+      <AddProject
+        open={open && openModalKey === "addProject"}
+        setOpen={setOpen}
+      />
+      <AddSprint
+        open={open && openModalKey === "addSprint"}
+        setOpen={setOpen}
+      />
+      <AddIssue open={open && openModalKey === "addIssue"} setOpen={setOpen} />
     </Sider>
   );
 };

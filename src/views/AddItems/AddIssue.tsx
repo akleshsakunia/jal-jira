@@ -36,7 +36,7 @@ export default ({
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
-        I am projmodal
+        I am Issuemodal
       </Modal>
     </>
   );
